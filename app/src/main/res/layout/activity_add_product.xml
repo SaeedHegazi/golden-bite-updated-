@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addProduct">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Add a product"
+            android:textSize="50dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:hint="name                                      "/>
+
+            <EditText
+                android:id="@+id/price"
+                android:textSize="25dp"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="price                                       "/>
+
+            <EditText
+                android:id="@+id/size"
+                android:textSize="25dp"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="size                                         "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textColor="#FF0000"
+                android:layout_height="wrap_content"
+                android:text="when size=0,the product will not appear in the customer page."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textColor="#FF0000"
+                android:layout_height="wrap_content"
+                android:text="when size=1,there is one size for the product."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textColor="#FF0000"
+                android:layout_height="wrap_content"
+                android:text="when size=2,there are two sizes for the product (small/large)."/>
+
+            <EditText
+                android:id="@+id/description"
+                android:textSize="25dp"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="description                            "/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/choosePicture"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:text="choose a picture"/>
+
+        <Button
+            android:id="@+id/addProduct"
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:text="add product"/>
+
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

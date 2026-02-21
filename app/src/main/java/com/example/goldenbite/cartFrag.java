@@ -9,17 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class adminMenuFrag extends Fragment {
+public class cartFrag extends Fragment {
 
 
-    public adminMenuFrag() {
+    public cartFrag() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_menu, container, false);
+        return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 }
