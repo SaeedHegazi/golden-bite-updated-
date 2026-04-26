@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "441709834008",
+    "project_id": "golden-bite-ee97a",
+    "storage_bucket": "golden-bite-ee97a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441709834008:android:2063eb8fb8bfda4f57f86d",
+        "android_client_info": {
+          "package_name": "com.example.goldenbite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3JOKS4yCz1Rila4qchlFn-brE59MT8Ks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

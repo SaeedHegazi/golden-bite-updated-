@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.GoldenBite.Button.Yellow" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/button_yellow</item>
+        <item name="android:textColor">@color/button_yellow_text</item>
+    </style>
+    <style name="Widget.GoldenBite.Button.Outlined.Orange" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/button_orange</item>
+        <item name="android:textColor">@color/button_orange</item>
+    </style>
+    <style name="Widget.GoldenBite.Button.Outlined.Yellow" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/button_yellow</item>
+        <item name="android:textColor">@color/button_yellow_text</item>
+    </style>
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/bottom_nav_indicator</item>
+    </style>
+</resources>
