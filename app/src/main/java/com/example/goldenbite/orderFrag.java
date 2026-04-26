@@ -1,5 +1,7 @@
 package com.example.goldenbite;
 
+import static com.example.goldenbite.cartFrag.phoneNum;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -74,7 +76,7 @@ public class orderFrag extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         ordersListener = db.collection("Order")
                 .whereEqualTo("done", false)
-                .whereEqualTo("phoneNum", phone)
+                .whereEqualTo("phoneNum", phoneNum)
                 .addSnapshotListener((snap, e) -> {
                     if (e != null || snap == null) {
                         return;

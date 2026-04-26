@@ -75,6 +75,12 @@
         android:text="Visa"
         app:buttonTint="@color/accent_control_yellow" />
 
+
+    <Spinner
+        android:id="@+id/spinnerCountries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,14 +117,6 @@
             android:inputType="numberPassword"
             android:maxLength="4"
             android:minHeight="48dp" />
-
-
-        <Spinner
-            android:id="@+id/spinnerCountries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
 
     </LinearLayout>
 

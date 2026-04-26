@@ -1,5 +1,6 @@
 package com.example.goldenbite;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,15 +39,19 @@ import okhttp3.Response;
 public class addProduct extends BaseActivity {
     String imageUrl;
 
-    Button pickImg, addProduct;
+    Button pickImg, addProduct, goBack;
     EditText etname, etprice, etsize, etdescription;
     Spinner categorySpinner;
     String selectedCategory = Product.CATEGORY_HOT_DRINKS;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+
+        goBack = findViewById(R.id.btn_add_go_back);
+        goBack.setOnClickListener(v -> finish());
 
 
         pickImg = findViewById(R.id.choosePicture);
@@ -110,6 +115,9 @@ public class addProduct extends BaseActivity {
             Product p = new Product(name, price, size, description, imageUrl, selectedCategory);
             p.saveProduct();
             Toast.makeText(this, "Product added", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(addProduct.this, MainActivity3.class);
+            startActivity(intent);
+
         });
 
 
