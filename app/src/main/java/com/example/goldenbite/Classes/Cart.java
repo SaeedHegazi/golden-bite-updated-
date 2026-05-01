@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Classes;
 
 public class Cart {
     private String Pname;
@@ -28,20 +28,11 @@ public class Cart {
     public void setSize(String size) {
         this.size = size;
     }
-
     public int getCount() {
         return count;
     }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public String getPname() {
         return Pname;
     }
 
-    public void setPname(String pname) {
-        Pname = pname;
-    }
 }

@@ -26,10 +26,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoldenBite">
         <receiver
-            android:name=".OrderReminderReceiver"
+            android:name=".Receivers.OrderReminderReceiver"
             android:exported="false" />
         <receiver
-            android:name=".BootReceiver"
+            android:name=".Receivers.BootReceiver"
             android:enabled="true"
             android:exported="true">
 
@@ -39,28 +39,28 @@
 
         </receiver>
         <activity
-            android:name=".BaseActivity"
+            android:name=".Activities.BaseActivity"
             android:exported="false" />
         <activity
-            android:name=".Orders"
+            android:name=".Activities.Orders"
             android:exported="false" />
         <activity
-            android:name=".EditProductActivity"
+            android:name=".Activities.EditProductActivity"
             android:exported="false" />
         <activity
-            android:name=".addProduct"
+            android:name=".Activities.addProduct"
             android:exported="false" />
         <activity
-            android:name=".adminMenu"
+            android:name=".Activities.adminMenu"
             android:exported="false" />
         <activity
-            android:name=".MainActivity3"
+            android:name=".Activities.MainActivity3"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".Activities.MainActivity2"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

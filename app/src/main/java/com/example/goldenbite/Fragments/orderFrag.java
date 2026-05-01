@@ -1,6 +1,6 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Fragments;
 
-import static com.example.goldenbite.cartFrag.phoneNum;
+import static com.example.goldenbite.Fragments.cartFrag.phoneNum;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.goldenbite.Adapters.CustomerOrdersAdapter;
+import com.example.goldenbite.Classes.Order;
+import com.example.goldenbite.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -66,8 +69,7 @@ public class orderFrag extends Fragment {
         if (!isAdded() || adapter == null) {
             return;
         }
-        String phone = cartFrag.getCustomerPhoneNum();
-        if (TextUtils.isEmpty(phone)) {
+        if (TextUtils.isEmpty(phoneNum)) {
             adapter.setOrders(new ArrayList<>());
             updateEmptyState(true);
             return;
@@ -111,53 +113,4 @@ public class orderFrag extends Fragment {
         super.onDestroyView();
     }
 
-    private static class CustomerOrdersAdapter extends RecyclerView.Adapter<CustomerOrdersAdapter.VH> {
-
-        private final List<Order> orders = new ArrayList<>();
-
-        void setOrders(List<Order> next) {
-            orders.clear();
-            if (next != null) {
-                orders.addAll(next);
-            }
-            notifyDataSetChanged();
-        }
-
-        @NonNull
-        @Override
-        public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_order, parent, false);
-            return new VH(v);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull VH h, int position) {
-            Order o = orders.get(position);
-            h.info.setText(o.getInfo());
-            h.price.setText(String.format(Locale.getDefault(), "%.2f", o.getPrice()));
-            h.purchase.setText(o.getPurchase());
-            h.phone.setText(o.getPhoneNum());
-        }
-
-        @Override
-        public int getItemCount() {
-            return orders.size();
-        }
-
-        static class VH extends RecyclerView.ViewHolder {
-            final TextView info;
-            final TextView price;
-            final TextView purchase;
-            final TextView phone;
-
-            VH(@NonNull View itemView) {
-                super(itemView);
-                info = itemView.findViewById(R.id.order_info);
-                price = itemView.findViewById(R.id.order_price);
-                purchase = itemView.findViewById(R.id.order_purchase);
-                phone = itemView.findViewById(R.id.order_phone);
-            }
-        }
-    }
 }

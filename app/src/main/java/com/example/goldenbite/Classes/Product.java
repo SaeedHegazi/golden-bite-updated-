@@ -1,6 +1,5 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Classes;
 
-import com.google.firebase.Firebase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -8,8 +7,6 @@ import java.util.Map;
 
 public class Product {
     public static final String CATEGORY_HOT_DRINKS = "Hot drinks";
-    public static final String CATEGORY_COLD_DRINKS = "Cold drinks";
-    public static final String CATEGORY_PANCAKES = "Pancakes";
 
     private String documentId;
     private String name;
@@ -68,39 +65,16 @@ public class Product {
     public void setSize(int size) {
         this.size = size;
     }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getImagUrl() {
         return imagUrl;
     }
-
-    public void setImagUrl(String imagUrl) {
-        this.imagUrl = imagUrl;
-    }
-
     public String getDocumentId() {
         return documentId;
     }
-
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public void saveProduct() {
         Map<String, Object> product = new HashMap<>();
         product.put("name", this.name);

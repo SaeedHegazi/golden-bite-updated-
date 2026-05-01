@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.example.goldenbite.Activities.Orders;
+import com.example.goldenbite.Activities.adminMenu;
+import com.example.goldenbite.R;
 
 import java.util.ArrayList;
 
@@ -47,7 +50,6 @@ public class adminSettingsFrag extends Fragment{
             }
         });
 
-        // Inflate the layout for this fragment
         return view;
     }
 

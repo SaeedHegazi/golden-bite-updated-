@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Adapters;
 
 import android.graphics.Color;
 import android.util.TypedValue;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.goldenbite.Classes.Order;
+import com.example.goldenbite.R;
 
 import java.util.ArrayList;
 import java.util.List;

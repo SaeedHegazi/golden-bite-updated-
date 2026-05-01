@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Classes;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -70,29 +70,8 @@ public class Order {
         }
         return 0d;
     }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
     public String getInfo() {
         return info;
-    }
-
-    public boolean isAccept() {
-        return accept;
-    }
-
-    public void setAccept(boolean accept) {
-        this.accept = accept;
-    }
-
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
     }
 
     public double getPrice() {
@@ -102,22 +81,13 @@ public class Order {
     public void setPrice(double price) {
         this.price = price;
     }
-
     public String getPurchase() {
         return purchase;
     }
-
-    public void setPurchase(String purchase) {
-        this.purchase = purchase;
-    }
-
     public String getPhoneNum() {
         return phoneNum;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
 
     public void saveOrder(){
         Map<String, Object> order = new HashMap<>();

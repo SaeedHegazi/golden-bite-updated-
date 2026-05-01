@@ -1,12 +1,14 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Activities;
 
 import android.os.Bundle;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.goldenbite.Classes.Order;
+import com.example.goldenbite.Adapters.OrderListAdapter;
+import com.example.goldenbite.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;

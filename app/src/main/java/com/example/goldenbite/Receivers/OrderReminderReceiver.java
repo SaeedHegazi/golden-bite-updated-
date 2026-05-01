@@ -1,13 +1,18 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Receivers;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+
+import com.example.goldenbite.R;
 
 public class OrderReminderReceiver extends BroadcastReceiver {
     @Override
@@ -36,8 +41,16 @@ public class OrderReminderReceiver extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-        NotificationManager notificationManager2 =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager2.notify(1001, builder.build());
+
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            NotificationManager notificationManager2 =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager2.notify(1001, builder.build());
+        } else {
+            Toast.makeText(context, "your order is sent,but ensure that allow notifications in settings", Toast.LENGTH_LONG).show();
+            return;
+        }
     }
 }

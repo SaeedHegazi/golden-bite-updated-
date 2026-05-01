@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Dialogs;
 
 import android.app.Dialog;
 import android.content.res.ColorStateList;
@@ -12,6 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.goldenbite.Activities.MainActivity2;
+import com.example.goldenbite.Classes.Cart;
+import com.example.goldenbite.Classes.Product;
+import com.example.goldenbite.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 

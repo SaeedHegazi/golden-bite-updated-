@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,19 +10,16 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.goldenbite.Classes.Product;
+import com.example.goldenbite.R;
 
 import org.json.JSONObject;
 
@@ -176,12 +173,4 @@ public class addProduct extends BaseActivity {
             }
         }).start();
     }
-
-
-
-
-
-
-
-
 }

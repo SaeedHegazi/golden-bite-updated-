@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.goldenbite.Classes.Cart;
+import com.example.goldenbite.R;
+import com.example.goldenbite.Fragments.cartFrag;
+import com.example.goldenbite.Fragments.menuFrag;
+import com.example.goldenbite.Fragments.orderFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

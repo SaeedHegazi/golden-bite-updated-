@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Activities;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,9 +8,6 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +15,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.goldenbite.R;
 
 public class BaseActivity extends AppCompatActivity {
 

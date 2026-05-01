@@ -1,4 +1,4 @@
-package com.example.goldenbite;
+package com.example.goldenbite.Receivers;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
