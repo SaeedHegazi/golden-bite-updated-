@@ -13,8 +13,10 @@ import androidx.annotation.NonNull;
 import com.example.goldenbite.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends BaseActivity {
     public boolean isLogin = false, isAdmin = false;
@@ -25,8 +27,23 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String email = currentUser.getEmail();
+            Intent intent;
+
+            if (email != null && email.equals("saeedhigaze.3@gmail.com")) {
+                intent = new Intent(MainActivity.this, MainActivity3.class);
+            } else {
+                intent = new Intent(MainActivity.this, MainActivity2.class);
+            }
+            startActivity(intent);
+            return;
+        }
+
+        setContentView(R.layout.activity_main);
 
         s=findViewById(R.id.signup);
         l=findViewById(R.id.login);
@@ -42,39 +59,38 @@ public class MainActivity extends BaseActivity {
                 String email = e.getText().toString().trim();
                 String pass = p.getText().toString().trim();
                 if (email.isEmpty()||pass.isEmpty()){
-                    Toast.makeText(MainActivity.this, "fill all fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "fill all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (pass.length()<4){
-                    Toast.makeText(MainActivity.this, "password must contain 5 num or chars", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "password must contain 5 num or chars", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    Toast.makeText(MainActivity.this, "wrong mail", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "wrong mail", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isComplete()){
+                        if (task.isSuccessful()){
                             isLogin = true;
                             Intent intent;
-                            String pass= p.getText().toString();
-                            if (pass.equals("admin")){
+                            String email = e.getText().toString();
+                            if (email.equals("saeedhigaze.3@gmail.com")){
                                 isAdmin = true;
-                                Toast.makeText(MainActivity.this, "signed in", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Admin signed in", Toast.LENGTH_SHORT).show();
                                 intent = new Intent(MainActivity.this, MainActivity3.class);
-                                startActivity(intent);
                             }
                             else {
-                                Toast.makeText(MainActivity.this, "signed in", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "signed in", Toast.LENGTH_SHORT).show();
                                 intent = new Intent(MainActivity.this, MainActivity2.class);
-                                startActivity(intent);
                             }
+                            startActivity(intent);
                         }
                         else {
-                            Toast.makeText(MainActivity.this, "wrong mail or pass", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "wrong mail or pass", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -87,15 +103,15 @@ public class MainActivity extends BaseActivity {
                 String email = e.getText().toString().trim();
                 String pass = p.getText().toString().trim();
                 if (email.isEmpty()||pass.isEmpty()){
-                    Toast.makeText(MainActivity.this, "fill all fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "fill all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (pass.length()<4){
-                    Toast.makeText(MainActivity.this, "password must contain 5 num or chars", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "password must contain 5 num or chars", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    Toast.makeText(MainActivity.this, "wrong mail", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "wrong mail", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -103,10 +119,10 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this, "user created", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "user created", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Toast.makeText(MainActivity.this, "already created", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "already created", Toast.LENGTH_SHORT).show();
                         }
 
                     }

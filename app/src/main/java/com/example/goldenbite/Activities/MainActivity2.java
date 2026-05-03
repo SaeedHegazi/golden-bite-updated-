@@ -15,12 +15,15 @@ import com.example.goldenbite.Fragments.menuFrag;
 import com.example.goldenbite.Fragments.orderFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class MainActivity2 extends BaseActivity {
 
     public static final ArrayList<Cart> cartItems = new ArrayList<>();
+    public static String phoneNum;
 
     private BottomNavigationView nav1;
     public static FrameLayout menuP,orderP,orderTimeP;
@@ -52,8 +55,12 @@ public class MainActivity2 extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId()==R.id.home){
+                    FirebaseAuth.getInstance().signOut();
                     Intent intent= new Intent(MainActivity2.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    finish();
+                    return true;
                 }
                 if(menuItem.getItemId()==R.id.menu){
                     menuP.setVisibility(View.VISIBLE);

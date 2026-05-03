@@ -1,19 +1,24 @@
 package com.example.goldenbite.Fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.goldenbite.Adapters.AdminOrderList;
 import com.example.goldenbite.Classes.Order;
-import com.example.goldenbite.Adapters.OrderListAdapter;
 import com.example.goldenbite.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,7 +36,7 @@ public class adminOrderFrag extends Fragment {
     private MaterialCardView orderActionsBar;
     private Button btnDontAccept;
     private Button btnDone;
-    private OrderListAdapter ordersAdapter;
+    private AdminOrderList ordersAdapter;
 
     public adminOrderFrag() {
     }
@@ -50,9 +55,16 @@ public class adminOrderFrag extends Fragment {
         btnDontAccept = view.findViewById(R.id.btn_dont_accept);
         btnDone = view.findViewById(R.id.btn_order_done);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+
         RecyclerView recycler = view.findViewById(R.id.admin_orders_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        ordersAdapter = new OrderListAdapter();
+        ordersAdapter = new AdminOrderList(requireContext());
         recycler.setAdapter(ordersAdapter);
 
         setFloatingBarActive(false);
@@ -78,6 +90,19 @@ public class adminOrderFrag extends Fragment {
                     }
                     ordersAdapter.setOrders(list);
                 });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "notifications allowed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "didn't allow notifications", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void setFloatingBarActive(boolean active) {

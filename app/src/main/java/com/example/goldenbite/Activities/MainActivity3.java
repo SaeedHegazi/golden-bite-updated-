@@ -13,6 +13,7 @@ import com.example.goldenbite.Fragments.adminOrderFrag;
 import com.example.goldenbite.Fragments.adminSettingsFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity3 extends BaseActivity {
     private BottomNavigationView adminNav1;
@@ -40,8 +41,12 @@ public class MainActivity3 extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if(menuItem.getItemId()==R.id.adminHome){
+                    FirebaseAuth.getInstance().signOut();
                     Intent intent=new Intent(MainActivity3.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    finish();
+                    return true;
                 }
                 if (menuItem.getItemId()==R.id.adminOrders){
                     adminOrdersP.setVisibility(View.VISIBLE);

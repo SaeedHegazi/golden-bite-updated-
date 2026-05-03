@@ -1,6 +1,6 @@
 package com.example.goldenbite.Fragments;
 
-import static com.example.goldenbite.Fragments.cartFrag.phoneNum;
+import static com.example.goldenbite.Activities.MainActivity2.phoneNum;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.goldenbite.Activities.MainActivity2;
 import com.example.goldenbite.Adapters.CustomerOrdersAdapter;
 import com.example.goldenbite.Classes.Order;
 import com.example.goldenbite.R;

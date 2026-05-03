@@ -49,7 +49,7 @@ public class OrderReminderReceiver extends BroadcastReceiver {
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager2.notify(1001, builder.build());
         } else {
-            Toast.makeText(context, "your order is sent,but ensure that allow notifications in settings", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "your order is sent,but ensure that allow notifications in settings", Toast.LENGTH_SHORT).show();
             return;
         }
     }

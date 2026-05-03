@@ -15,9 +15,10 @@
     <string name="order_error_phone">Please enter your phone number.</string>
     <string name="order_error_payment_both">Choose only one payment method: Cash or Visa.</string>
     <string name="order_error_payment_none">Please select Cash or Visa.</string>
-    <string name="order_error_card_number">Enter a valid card number (13–19 digits).</string>
-    <string name="order_error_card_expiry">Enter expiry as MM/YY (e.g. 08/27).</string>
-    <string name="order_error_card_cvv">Enter a 3 or 4 digit CVV.</string>
+    <string name="order_error_card_number">Enter a valid card number (16 digits).</string>
+    <string name="order_error_card_expiry">Your visa card has expired</string>
+    <string name="order_error_card_layout">Enter expiry as MM/YY (e.g. 08/27).</string>
+    <string name="order_error_card_cvv">Enter a 3 digit CVV.</string>
     <string name="order_placed">Order is submitting, wait to receive an alarm.</string>
     <string name="order_frag_empty">No active orders. Place an order from the cart to see it here.</string>
     <string name="cart_delete_title">Remove from cart?</string>

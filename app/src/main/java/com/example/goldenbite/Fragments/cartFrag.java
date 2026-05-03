@@ -1,6 +1,8 @@
 package com.example.goldenbite.Fragments;
 
 
+import static com.example.goldenbite.Activities.MainActivity2.phoneNum;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -38,6 +40,7 @@ import com.example.goldenbite.R;
 import com.example.goldenbite.Receivers.OrderReminderReceiver;
 
 
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class cartFrag extends Fragment {
@@ -49,7 +52,6 @@ public class cartFrag extends Fragment {
     private RecyclerView recyclerView;
     private EditText customerName;
     private EditText phone;
-    public static String phoneNum;
     private CheckBox delivery;
     private CheckBox cash;
     private CheckBox visa;
@@ -82,33 +84,37 @@ public class cartFrag extends Fragment {
         orderButton = root.findViewById(R.id.cart_order);
 
         cardNumber.addTextChangedListener(new TextWatcher() {
-            private static final char space = ' ';
+            private boolean isUpdating = false;
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0 && (s.length() % 5) == 0) {
-                    final char c = s.charAt(s.length() - 1);
-                    if (space == c) {
-                        s.delete(s.length() - 1, s.length());
+                if (isUpdating) return;
+
+                isUpdating = true;
+
+                String originalText = s.toString().replace(" ", "");
+                StringBuilder sb = new StringBuilder();
+
+                for (int i = 0; i < originalText.length(); i++) {
+                    if (i > 0 && i % 4 == 0) {
+                        sb.append(" ");
                     }
+                    sb.append(originalText.charAt(i));
                 }
-                if (s.length() > 0 && (s.length() % 5) == 0) {
-                    char c = s.charAt(s.length() - 1);
-                    if (Character.isDigit(c)) {
-                        s.insert(s.length() - 1, String.valueOf(space));
-                    }
-                }
-            }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                cardNumber.setText(sb.toString());
+                cardNumber.setSelection(sb.length());
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                isUpdating = false;
             }
         });
+
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
                 requireContext(),
@@ -241,11 +247,23 @@ public class cartFrag extends Fragment {
             String expiry = cardExpiry.getText() != null ? cardExpiry.getText().toString().trim() : "";
             String cvv = cardCvv.getText() != null ? cardCvv.getText().toString().trim() : "";
 
-            if (digits.length() != 19) {
+            String[] parts = expiry.split("/");
+            int inputMonth = Integer.parseInt(parts[0]);
+            int inputYear = Integer.parseInt(parts[1]) + 2000;
+
+            Calendar now = Calendar.getInstance();
+            int currentMonth = now.get(Calendar.MONTH) + 1;
+            int currentYear = now.get(Calendar.YEAR);
+
+            if (digits.length() != 16) {
                 toast(getString(R.string.order_error_card_number));
                 return;
             }
             if (!EXPIRY_MM_YY.matcher(expiry).matches()) {
+                toast(getString(R.string.order_error_card_layout));
+                return;
+            }
+            if (inputYear < currentYear || (inputYear == currentYear && inputMonth < currentMonth)) {
                 toast(getString(R.string.order_error_card_expiry));
                 return;
             }
