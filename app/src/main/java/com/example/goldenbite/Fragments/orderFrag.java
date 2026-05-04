@@ -2,19 +2,15 @@ package com.example.goldenbite.Fragments;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.goldenbite.Activities.MainActivity2;
 import com.example.goldenbite.Adapters.CustomerOrdersAdapter;
 import com.example.goldenbite.Classes.Order;
 import com.example.goldenbite.Classes.PhoneNum;
@@ -22,7 +18,6 @@ import com.example.goldenbite.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +27,6 @@ public class orderFrag extends Fragment {
     private RecyclerView recyclerView;
     private TextView emptyView;
     private CustomerOrdersAdapter adapter;
-    private String phone ="";
-
     public orderFrag() {
     }
 
@@ -55,7 +48,6 @@ public class orderFrag extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("CHECK_DATA", "دخلنا دالة onStart - جاري التحديث...");
         attachOrdersListener();
     }
     @Override
@@ -67,10 +59,8 @@ public class orderFrag extends Fragment {
         detachOrdersListener();
 
         String currentPhone = PhoneNum.phoneNumber;
-        Log.d("CHECK_DATA", "الرقم الذي نرسله لفايربيز هو: [" + currentPhone + "]");
 
         if (TextUtils.isEmpty(currentPhone)) {
-            Log.e("CHECK_DATA", "فشل: الرقم فارغ!");
             updateEmptyState(true);
             return;
         }
@@ -81,12 +71,10 @@ public class orderFrag extends Fragment {
                 .whereEqualTo("phoneNum", currentPhone.trim())
                 .addSnapshotListener((snap, e) -> {
                     if (e != null) {
-                        Log.e("CHECK_DATA", "خطأ من فايربيز: " + e.getMessage());
                         return;
                     }
 
                     if (snap != null) {
-                        Log.d("CHECK_DATA", "تم العثور على: " + snap.size() + " طلبات");
                         List<Order> list = new ArrayList<>();
                         for (DocumentSnapshot doc : snap.getDocuments()) {
                             Order o = Order.fromSnapshot(doc);
