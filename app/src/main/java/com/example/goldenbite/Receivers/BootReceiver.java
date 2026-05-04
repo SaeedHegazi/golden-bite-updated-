@@ -1,24 +1,26 @@
 package com.example.goldenbite.Receivers;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 
 public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
 
-            scheduleAlarm(context);
+            ComponentName component = new ComponentName(context, BootReceiver.class);
+            int status = context.getPackageManager().getComponentEnabledSetting(component);
 
+            if (status == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+                scheduleAlarm(context);
+            }
         }
-
     }
-
-    @SuppressLint("ScheduleExactAlarm")
     private void scheduleAlarm(Context context){
         Intent intent = new Intent(context, OrderReminderReceiver.class);
 
@@ -30,12 +32,14 @@ public class BootReceiver extends BroadcastReceiver {
         );
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        long triggerTime = System.currentTimeMillis() + 5 * 1000;
-        alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                triggerTime,
-                pendingIntent
-        );
+        if (alarmManager != null){
+            alarmManager.cancel(pendingIntent);
+            long triggerTime = System.currentTimeMillis() + 5 * 1000;
+            alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    triggerTime,
+                    pendingIntent
+            );
+        }
     }
 }

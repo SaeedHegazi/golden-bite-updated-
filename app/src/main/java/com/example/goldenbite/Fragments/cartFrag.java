@@ -1,12 +1,9 @@
 package com.example.goldenbite.Fragments;
 
-
-import static com.example.goldenbite.Activities.MainActivity2.phoneNum;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,9 @@ import com.example.goldenbite.Activities.MainActivity2;
 import com.example.goldenbite.Adapters.CartAdapter;
 import com.example.goldenbite.Classes.Cart;
 import com.example.goldenbite.Classes.Order;
+import com.example.goldenbite.Classes.PhoneNum;
 import com.example.goldenbite.R;
+import com.example.goldenbite.Receivers.BootReceiver;
 import com.example.goldenbite.Receivers.OrderReminderReceiver;
 
 
@@ -59,7 +59,6 @@ public class cartFrag extends Fragment {
     private EditText cardExpiry;
     private EditText cardCvv;
     private Button orderButton;
-
     Spinner spinner;
 
 
@@ -82,6 +81,8 @@ public class cartFrag extends Fragment {
         cardCvv = root.findViewById(R.id.cart_card_cvv);
         spinner = root.findViewById(R.id.spinnerCountries);
         orderButton = root.findViewById(R.id.cart_order);
+
+
 
         cardNumber.addTextChangedListener(new TextWatcher() {
             private boolean isUpdating = false;
@@ -143,6 +144,23 @@ public class cartFrag extends Fragment {
         orderButton.setOnClickListener(v -> submitOrder());
         return root;
     }
+    public void scheduleAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), OrderReminderReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getContext(),
+                1001,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        long triggerTime = System.currentTimeMillis() + 5 * 1000;
+
+        if (alarmManager != null) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+        }
+    }
 
 
 
@@ -182,6 +200,18 @@ public class cartFrag extends Fragment {
         } else {
             completeOrder();
         }
+        Context context = getContext();
+        if (context != null) {
+            ComponentName component = new ComponentName(context, BootReceiver.class);
+            context.getPackageManager().setComponentEnabledSetting(
+                    component,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP
+            );
+
+            scheduleAlarm();
+        }
+
     }
 
     private static String cardDigitsOnly(String raw) {
@@ -287,11 +317,12 @@ public class cartFrag extends Fragment {
         }
 
         String info = buildOrderInfo(name, delivery.isChecked());
-        phoneNum = phoneStr;
+        PhoneNum.phoneNumber = phoneStr;
+        Log.d("CHECK_DATA", "تم الحفظ بنجاح: " + PhoneNum.phoneNumber);
 
         Order order;
 
-        order = new Order(info, phoneNum, purchase, total, false, true, panValue, cvvValue);
+        order = new Order(info, phoneStr, purchase, total, false, true, panValue, cvvValue);
         order.saveOrder();
         toast(getString(R.string.order_placed));
         scheduleOrderReminder();
@@ -312,7 +343,6 @@ public class cartFrag extends Fragment {
         }
     }
 
-    @SuppressLint("ScheduleExactAlarm")
     private void scheduleOrderReminder() {
 
         Intent intent = new Intent(getContext(), OrderReminderReceiver.class);
@@ -329,7 +359,7 @@ public class cartFrag extends Fragment {
         long triggerTime = System.currentTimeMillis() + 5 * 1000;
 
         if (alarmManager != null) {
-            alarmManager.setExactAndAllowWhileIdle(
+            alarmManager.set(
                     AlarmManager.RTC_WAKEUP,
                     triggerTime,
                     pendingIntent

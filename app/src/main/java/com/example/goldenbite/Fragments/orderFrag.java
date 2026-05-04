@@ -1,9 +1,8 @@
 package com.example.goldenbite.Fragments;
 
-import static com.example.goldenbite.Activities.MainActivity2.phoneNum;
-
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.goldenbite.Activities.MainActivity2;
 import com.example.goldenbite.Adapters.CustomerOrdersAdapter;
 import com.example.goldenbite.Classes.Order;
+import com.example.goldenbite.Classes.PhoneNum;
 import com.example.goldenbite.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,7 +25,6 @@ import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class orderFrag extends Fragment {
 
@@ -33,6 +32,7 @@ public class orderFrag extends Fragment {
     private RecyclerView recyclerView;
     private TextView emptyView;
     private CustomerOrdersAdapter adapter;
+    private String phone ="";
 
     public orderFrag() {
     }
@@ -52,26 +52,25 @@ public class orderFrag extends Fragment {
         adapter = new CustomerOrdersAdapter();
         recyclerView.setAdapter(adapter);
     }
-
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+        Log.d("CHECK_DATA", "دخلنا دالة onStart - جاري التحديث...");
         attachOrdersListener();
     }
-
     @Override
     public void onPause() {
         super.onPause();
         detachOrdersListener();
     }
-
-    private void attachOrdersListener() {
+    public void attachOrdersListener() {
         detachOrdersListener();
-        if (!isAdded() || adapter == null) {
-            return;
-        }
-        if (TextUtils.isEmpty(phoneNum)) {
-            adapter.setOrders(new ArrayList<>());
+
+        String currentPhone = PhoneNum.phoneNumber;
+        Log.d("CHECK_DATA", "الرقم الذي نرسله لفايربيز هو: [" + currentPhone + "]");
+
+        if (TextUtils.isEmpty(currentPhone)) {
+            Log.e("CHECK_DATA", "فشل: الرقم فارغ!");
             updateEmptyState(true);
             return;
         }
@@ -79,23 +78,25 @@ public class orderFrag extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         ordersListener = db.collection("Order")
                 .whereEqualTo("done", false)
-                .whereEqualTo("phoneNum", phoneNum)
+                .whereEqualTo("phoneNum", currentPhone.trim())
                 .addSnapshotListener((snap, e) -> {
-                    if (e != null || snap == null) {
+                    if (e != null) {
+                        Log.e("CHECK_DATA", "خطأ من فايربيز: " + e.getMessage());
                         return;
                     }
-                    List<Order> list = new ArrayList<>();
-                    for (DocumentSnapshot doc : snap.getDocuments()) {
-                        Order o = Order.fromSnapshot(doc);
-                        if (o != null) {
-                            list.add(o);
+
+                    if (snap != null) {
+                        Log.d("CHECK_DATA", "تم العثور على: " + snap.size() + " طلبات");
+                        List<Order> list = new ArrayList<>();
+                        for (DocumentSnapshot doc : snap.getDocuments()) {
+                            Order o = Order.fromSnapshot(doc);
+                            if (o != null) list.add(o);
                         }
+                        adapter.setOrders(list);
+                        updateEmptyState(list.isEmpty());
                     }
-                    adapter.setOrders(list);
-                    updateEmptyState(list.isEmpty());
                 });
     }
-
     private void detachOrdersListener() {
         if (ordersListener != null) {
             ordersListener.remove();

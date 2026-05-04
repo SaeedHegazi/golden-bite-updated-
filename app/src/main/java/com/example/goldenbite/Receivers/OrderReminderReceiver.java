@@ -3,6 +3,7 @@ package com.example.goldenbite.Receivers;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -52,5 +53,12 @@ public class OrderReminderReceiver extends BroadcastReceiver {
             Toast.makeText(context, "your order is sent,but ensure that allow notifications in settings", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        ComponentName component = new ComponentName(context, BootReceiver.class);
+        context.getPackageManager().setComponentEnabledSetting(
+                component,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+        );
     }
 }

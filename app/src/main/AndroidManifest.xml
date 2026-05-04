@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
@@ -24,14 +23,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".Classes.PhoneNum"
         android:theme="@style/Theme.GoldenBite">
         <receiver
             android:name=".Receivers.OrderReminderReceiver"
             android:exported="false" />
         <receiver
             android:name=".Receivers.BootReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:enabled="false"
+            android:exported="false">
 
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

@@ -17,18 +17,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/cartF"
+        android:layout_above="@id/customerNav"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/orderF"
-        android:layout_above="@id/customerNav"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/orderTimeF"
-        android:layout_above="@id/customerNav"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/aiF"
         android:layout_above="@id/customerNav"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

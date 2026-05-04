@@ -88,7 +88,7 @@ public class adminOrderFrag extends Fragment {
                             list.add(o);
                         }
                     }
-                    ordersAdapter.setOrders(list);
+                    ordersAdapter.setOrder(list);
                 });
     }
 

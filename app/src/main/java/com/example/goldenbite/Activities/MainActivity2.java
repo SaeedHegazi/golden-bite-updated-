@@ -16,17 +16,14 @@ import com.example.goldenbite.Fragments.orderFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class MainActivity2 extends BaseActivity {
 
     public static final ArrayList<Cart> cartItems = new ArrayList<>();
-    public static String phoneNum;
-
     private BottomNavigationView nav1;
-    public static FrameLayout menuP,orderP,orderTimeP;
+    public static FrameLayout menuP,cartP,orderP;
     private menuFrag menuFrag1;
     private cartFrag cartFrag1;
     private orderFrag orderFrag1;
@@ -39,18 +36,19 @@ public class MainActivity2 extends BaseActivity {
 
 
         menuP = findViewById(R.id.menuF);
+        cartP = findViewById(R.id.cartF);
         orderP = findViewById(R.id.orderF);
-        orderTimeP = findViewById(R.id.orderTimeF);
         menuFrag1=new menuFrag();
         cartFrag1 =new cartFrag();
         orderFrag1 =new orderFrag();
         getSupportFragmentManager().beginTransaction().replace(R.id.menuF,menuFrag1).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.orderF, cartFrag1).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.orderTimeF, orderFrag1).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.cartF, cartFrag1).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.orderF, orderFrag1).commit();
         menuP.setVisibility(View.VISIBLE);
+        cartP.setVisibility(View.INVISIBLE);
         orderP.setVisibility(View.INVISIBLE);
-        orderTimeP.setVisibility(View.INVISIBLE);
         nav1=findViewById(R.id.customerNav);
+
         nav1.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -64,19 +62,22 @@ public class MainActivity2 extends BaseActivity {
                 }
                 if(menuItem.getItemId()==R.id.menu){
                     menuP.setVisibility(View.VISIBLE);
+                    cartP.setVisibility(View.INVISIBLE);
                     orderP.setVisibility(View.INVISIBLE);
-                    orderTimeP.setVisibility(View.INVISIBLE);
+                }
+                if(menuItem.getItemId()==R.id.cart){
+                    menuP.setVisibility(View.INVISIBLE);
+                    cartP.setVisibility(View.VISIBLE);
+                    orderP.setVisibility(View.INVISIBLE);
+                    cartFrag1.refreshCart();
                 }
                 if(menuItem.getItemId()==R.id.order){
                     menuP.setVisibility(View.INVISIBLE);
+                    cartP.setVisibility(View.INVISIBLE);
                     orderP.setVisibility(View.VISIBLE);
-                    orderTimeP.setVisibility(View.INVISIBLE);
-                    cartFrag1.refreshCart();
-                }
-                if(menuItem.getItemId()==R.id.time){
-                    menuP.setVisibility(View.INVISIBLE);
-                    orderP.setVisibility(View.INVISIBLE);
-                    orderTimeP.setVisibility(View.VISIBLE);
+                    if (orderFrag1 instanceof orderFrag) {
+                        ((orderFrag) orderFrag1).attachOrdersListener();
+                    }
                 }
                 return false;
             }

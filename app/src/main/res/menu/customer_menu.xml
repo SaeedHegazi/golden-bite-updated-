@@ -17,15 +17,15 @@
     </item>
 
     <item
-        android:title="order"
-        android:id="@+id/order"
+        android:title="cart"
+        android:id="@+id/cart"
         android:icon="@drawable/cart"
         android:orderInCategory="300">
 
     </item>
     <item
-        android:title="time"
-        android:id="@+id/time"
+        android:title="order"
+        android:id="@+id/order"
         android:icon="@drawable/restaurant"
         android:orderInCategory="400">
 

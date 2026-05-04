@@ -1,9 +1,5 @@
 package com.example.goldenbite.Adapters;
 
-import static androidx.core.app.ActivityCompat.requestPermissions;
-
-import static java.security.AccessController.getContext;
-
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -70,7 +66,7 @@ public class AdminOrderList extends RecyclerView.Adapter<AdminOrderList.VH> {
         }
     }
 
-    public void setOrders(List<Order> next) {
+    public void setOrder(List<Order> next) {
         int previousCount = orders.size();
 
         orders.clear();

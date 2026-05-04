@@ -4,13 +4,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="cart_size_disabled_bg">#FFE0E0E0</color>
     <color name="cart_size_disabled_fg">#FF757575</color>
-    <!-- Button groups: yellow = primary CTAs, orange = secondary / navigation -->
+
     <color name="button_yellow">#FFCA28</color>
     <color name="button_yellow_text">#4E342E</color>
     <color name="button_orange">#FB8C00</color>
     <color name="button_on_orange">#FFFFFFFF</color>
     <color name="bottom_nav_indicator">#4DFFCA28</color>
     <color name="control_unchecked">#FF9E9E9E</color>
-    <!-- Add-to-cart dialog: selected size highlight (orange group) -->
+
     <color name="add_to_cart_accent">#FB8C00</color>
 </resources>
