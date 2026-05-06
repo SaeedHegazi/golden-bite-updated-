@@ -320,7 +320,7 @@ public class cartFrag extends Fragment {
 
         Order order;
 
-        order = new Order(info, phoneStr, purchase, total, false, true, panValue, cvvValue);
+        order = new Order(info, phoneStr, purchase, total, false, panValue, cvvValue);
         order.saveOrder();
         toast(getString(R.string.order_placed));
         scheduleOrderReminder();
@@ -340,7 +340,6 @@ public class cartFrag extends Fragment {
             }
         }
     }
-
     private void scheduleOrderReminder() {
 
         Intent intent = new Intent(getContext(), OrderReminderReceiver.class);

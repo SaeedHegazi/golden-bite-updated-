@@ -34,7 +34,6 @@ public class adminOrderFrag extends Fragment {
 
     private ListenerRegistration ordersListener;
     private MaterialCardView orderActionsBar;
-    private Button btnDontAccept;
     private Button btnDone;
     private AdminOrderList ordersAdapter;
 
@@ -52,7 +51,6 @@ public class adminOrderFrag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         orderActionsBar = view.findViewById(R.id.admin_order_actions);
-        btnDontAccept = view.findViewById(R.id.btn_dont_accept);
         btnDone = view.findViewById(R.id.btn_order_done);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -72,8 +70,7 @@ public class adminOrderFrag extends Fragment {
                 setFloatingBarActive(selected && order != null));
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        btnDontAccept.setOnClickListener(v -> applyOrderUpdate(db, true));
-        btnDone.setOnClickListener(v -> applyOrderUpdate(db, false));
+        btnDone.setOnClickListener(v -> applyOrderUpdate(db));
 
         ordersListener = db.collection("Order")
                 .whereEqualTo("done", false)
@@ -107,27 +104,22 @@ public class adminOrderFrag extends Fragment {
 
     private void setFloatingBarActive(boolean active) {
         orderActionsBar.setAlpha(active ? 1f : 0.45f);
-        btnDontAccept.setEnabled(active);
         btnDone.setEnabled(active);
     }
 
-    private void applyOrderUpdate(FirebaseFirestore db, boolean reject) {
+    private void applyOrderUpdate(FirebaseFirestore db) {
         Order selected = ordersAdapter.getSelectedOrder();
         if (selected == null || selected.getFirestoreId() == null) {
             return;
         }
         String id = selected.getFirestoreId();
         Map<String, Object> updates = new HashMap<>();
-        if (reject) {
-            updates.put("accept", false);
-            updates.put("done", true);
-        } else {
-            updates.put("done", true);
-        }
+
+        updates.put("done", true);
+
         db.collection("Order").document(id).update(updates)
                 .addOnSuccessListener(unused -> ordersAdapter.clearSelection());
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

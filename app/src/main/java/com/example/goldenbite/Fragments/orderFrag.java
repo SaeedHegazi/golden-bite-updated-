@@ -1,11 +1,14 @@
 package com.example.goldenbite.Fragments;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -42,7 +45,7 @@ public class orderFrag extends Fragment {
         recyclerView = view.findViewById(R.id.order_frag_recycler);
         emptyView = view.findViewById(R.id.order_frag_empty);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new CustomerOrdersAdapter();
+        adapter = new CustomerOrdersAdapter(requireContext());
         recyclerView.setAdapter(adapter);
     }
     @Override
@@ -84,6 +87,18 @@ public class orderFrag extends Fragment {
                         updateEmptyState(list.isEmpty());
                     }
                 });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "notifications allowed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "didn't allow notifications", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     private void detachOrdersListener() {
         if (ordersListener != null) {

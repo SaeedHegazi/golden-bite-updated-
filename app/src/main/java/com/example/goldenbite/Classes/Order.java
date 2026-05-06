@@ -13,20 +13,17 @@ public class Order {
     private String purchase;
     private double price;
     private boolean done;
-    private boolean accept;
     private String pan;
     private String cvv;
 
 
 
-    public Order(String info, String phoneNum, String purchase, double price, boolean done, boolean accept,
-                 String pan, String cvv) {
+    public Order(String info, String phoneNum, String purchase, double price, boolean done, String pan, String cvv) {
         this.info = info;
         this.phoneNum = phoneNum;
         this.purchase = purchase;
         this.price = price;
         this.done = done;
-        this.accept = accept;
         this.pan = pan;
         this.cvv = cvv;
     }
@@ -49,13 +46,12 @@ public class Order {
         String purchase = str(m.get("purchase"));
         double price = toDouble(m.get("price"));
         boolean done = Boolean.TRUE.equals(m.get("done"));
-        boolean accept = Boolean.TRUE.equals(m.get("accept"));
         String pan = str(m.get("pan"));
         String cvv = str(m.get("cvc"));
         if (cvv.isEmpty()) {
             cvv = str(m.get("cvv"));
         }
-        Order o = new Order(info, phoneNum, purchase, price, done, accept, pan, cvv);
+        Order o = new Order(info, phoneNum, purchase, price, done, pan, cvv);
         o.setFirestoreId(doc.getId());
         return o;
     }
@@ -96,7 +92,6 @@ public class Order {
         order.put("purchase", this.purchase);
         order.put("price", this.price);
         order.put("done", this.done);
-        order.put("accept", this.accept);
         order.put("pan", this.pan);
         order.put("cvc", this.cvv);
 
