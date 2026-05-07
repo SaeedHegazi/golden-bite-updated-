@@ -1,6 +1,9 @@
 package com.example.goldenbite.Activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.example.goldenbite.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,6 +47,12 @@ public class MainActivity extends BaseActivity {
         }
 
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
 
         s=findViewById(R.id.signup);
         l=findViewById(R.id.login);
@@ -124,5 +134,17 @@ public class MainActivity extends BaseActivity {
                 });
             }
         });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "notifications allowed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "didn't allow notifications", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
