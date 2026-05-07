@@ -37,7 +37,7 @@ import okhttp3.Response;
 public class EditProductActivity extends BaseActivity {
 
     public static final String EXTRA_PRODUCT_DOC_ID = "product_doc_id";
-    Button btnChangePicture, btnUpdate, goBack;
+    public Button btnChangePicture, btnUpdate, goBack;
 
     private String documentId, imageUrl;
     private EditText etName, etPrice, etSize, etDescription;
@@ -62,12 +62,6 @@ public class EditProductActivity extends BaseActivity {
             finish();
             return;
         }
-
-
-
-
-
-
         showEditForm();
     }
 

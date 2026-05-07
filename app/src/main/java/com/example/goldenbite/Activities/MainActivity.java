@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import com.example.goldenbite.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -70,7 +69,6 @@ public class MainActivity extends BaseActivity {
                     Toast.makeText(MainActivity.this, "wrong mail", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -96,7 +94,6 @@ public class MainActivity extends BaseActivity {
                 });
             }
         });
-
         s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +111,6 @@ public class MainActivity extends BaseActivity {
                     Toast.makeText(MainActivity.this, "wrong mail", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -124,14 +120,9 @@ public class MainActivity extends BaseActivity {
                         else{
                             Toast.makeText(MainActivity.this, "already created", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
             }
         });
-
-
-
     }
-
 }

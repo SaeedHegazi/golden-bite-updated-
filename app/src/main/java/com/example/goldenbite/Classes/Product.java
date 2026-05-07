@@ -31,7 +31,6 @@ public class Product {
         this.category = category != null ? category : CATEGORY_HOT_DRINKS;
     }
 
-    /* For loading from Firestore */
     public Product(String documentId, String name, int price, int size, String description, String imagUrl, String category) {
         this.documentId = documentId;
         this.name = name;
@@ -99,8 +98,4 @@ public class Product {
 
         FirebaseFirestore.getInstance().collection("Product").document(documentId).set(product);
     }
-
-
-
-
 }

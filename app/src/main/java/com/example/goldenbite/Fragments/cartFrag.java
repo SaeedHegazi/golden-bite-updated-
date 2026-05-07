@@ -58,9 +58,7 @@ public class cartFrag extends Fragment {
     private EditText cardExpiry;
     private EditText cardCvv;
     private Button orderButton;
-    Spinner spinner;
-
-
+    public Spinner spinner;
     public cartFrag() {
     }
 
@@ -143,26 +141,6 @@ public class cartFrag extends Fragment {
         orderButton.setOnClickListener(v -> submitOrder());
         return root;
     }
-    public void scheduleAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), OrderReminderReceiver.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                getContext(),
-                1001,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-
-        long triggerTime = System.currentTimeMillis() + 5 * 1000;
-
-        if (alarmManager != null) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-        }
-    }
-
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -207,10 +185,7 @@ public class cartFrag extends Fragment {
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                     PackageManager.DONT_KILL_APP
             );
-
-            scheduleAlarm();
         }
-
     }
 
     private static String cardDigitsOnly(String raw) {
@@ -241,7 +216,9 @@ public class cartFrag extends Fragment {
     }
 
     public void completeOrder(){
+        boolean isOrder = true;
         if (MainActivity2.cartItems.isEmpty()) {
+            isOrder = false;
             toast(getString(R.string.order_error_cart_empty));
             return;
         }
@@ -249,21 +226,35 @@ public class cartFrag extends Fragment {
         String name = customerName.getText() != null ? customerName.getText().toString().trim() : "";
         String phoneStr = phone.getText() != null ? phone.getText().toString().trim() : "";
         if (TextUtils.isEmpty(name)) {
+            isOrder = false;
             toast(getString(R.string.order_error_name));
             return;
         }
+        if (!(name.matches("^[a-zA-Z\\s]+$"))){
+            isOrder = false;
+            toast(getString(R.string.order_error_name_wrong));
+            return;
+        }
         if (TextUtils.isEmpty(phoneStr)) {
+            isOrder = false;
             toast(getString(R.string.order_error_phone));
+            return;
+        }
+        if (!(phoneStr.matches("^\\d{10}$"))){
+            isOrder = false;
+            toast(getString(R.string.order_error_phone_wrong));
             return;
         }
 
         boolean cashOn = cash.isChecked();
         boolean visaOn = visa.isChecked();
         if (cashOn && visaOn) {
+            isOrder = false;
             toast(getString(R.string.order_error_payment_both));
             return;
         }
         if (!cashOn && !visaOn) {
+            isOrder = false;
             toast(getString(R.string.order_error_payment_none));
             return;
         }
@@ -285,18 +276,22 @@ public class cartFrag extends Fragment {
             int currentYear = now.get(Calendar.YEAR);
 
             if (digits.length() != 16) {
+                isOrder = false;
                 toast(getString(R.string.order_error_card_number));
                 return;
             }
             if (!EXPIRY_MM_YY.matcher(expiry).matches()) {
+                isOrder = false;
                 toast(getString(R.string.order_error_card_layout));
                 return;
             }
             if (inputYear < currentYear || (inputYear == currentYear && inputMonth < currentMonth)) {
+                isOrder = false;
                 toast(getString(R.string.order_error_card_expiry));
                 return;
             }
             if (!cvv.matches("\\d+") || (cvv.length() != 3 && cvv.length() != 4)) {
+                isOrder = false;
                 toast(getString(R.string.order_error_card_cvv));
                 return;
             }
@@ -314,17 +309,17 @@ public class cartFrag extends Fragment {
         if (delivery.isChecked()) {
             total += 20;
         }
+        if (isOrder){
+            String info = buildOrderInfo(name, delivery.isChecked());
+            PhoneNum.phoneNumber = phoneStr;
 
-        String info = buildOrderInfo(name, delivery.isChecked());
-        PhoneNum.phoneNumber = phoneStr;
+            Order order;
 
-        Order order;
-
-        order = new Order(info, phoneStr, purchase, total, false, panValue, cvvValue);
-        order.saveOrder();
-        toast(getString(R.string.order_placed));
-        scheduleOrderReminder();
-        new OrderReminderReceiver();
+            order = new Order(info, phoneStr, purchase, total, false, panValue, cvvValue);
+            order.saveOrder();
+            toast(getString(R.string.order_placed));
+            scheduleOrderReminder();
+        }
     }
 
     @Override

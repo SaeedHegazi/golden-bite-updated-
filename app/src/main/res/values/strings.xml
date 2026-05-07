@@ -12,7 +12,9 @@
     <string name="cart_empty">Your cart is empty</string>
     <string name="order_error_cart_empty">Your cart is empty. Add items before ordering.</string>
     <string name="order_error_name">Please enter your name.</string>
+    <string name="order_error_name_wrong">Please just enter letters.</string>
     <string name="order_error_phone">Please enter your phone number.</string>
+    <string name="order_error_phone_wrong">Please just enter 10 numbers.</string>
     <string name="order_error_payment_both">Choose only one payment method: Cash or Visa.</string>
     <string name="order_error_payment_none">Please select Cash or Visa.</string>
     <string name="order_error_card_number">Enter a valid card number (16 digits).</string>
