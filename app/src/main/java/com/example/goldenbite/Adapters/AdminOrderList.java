@@ -74,7 +74,7 @@ public class AdminOrderList extends RecyclerView.Adapter<AdminOrderList.VH> {
             orders.addAll(next);
         }
 
-        if (next != null && next.size() > previousCount && previousCount > 0) {
+        if (next != null && (previousCount == 0 && next.size() > 0 || next.size() > previousCount)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
                         == PackageManager.PERMISSION_GRANTED) {
