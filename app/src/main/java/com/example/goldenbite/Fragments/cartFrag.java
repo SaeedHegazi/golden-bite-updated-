@@ -267,16 +267,9 @@ public class cartFrag extends Fragment {
             String expiry = cardExpiry.getText() != null ? cardExpiry.getText().toString().trim() : "";
             String cvv = cardCvv.getText() != null ? cardCvv.getText().toString().trim() : "";
 
-            String[] parts = expiry.split("/");
-            int inputMonth = Integer.parseInt(parts[0]);
-            int inputYear = Integer.parseInt(parts[1]) + 2000;
-
-            Calendar now = Calendar.getInstance();
-            int currentMonth = now.get(Calendar.MONTH) + 1;
-            int currentYear = now.get(Calendar.YEAR);
-
-            if(digits == null || expiry == null || cvv == null){
+            if (TextUtils.isEmpty(digits) || TextUtils.isEmpty(expiry) || TextUtils.isEmpty(cvv)) {
                 toast(getString(R.string.card_info_null));
+                return;
             }
 
             if (digits.length() != 16) {
@@ -289,16 +282,25 @@ public class cartFrag extends Fragment {
                 toast(getString(R.string.order_error_card_layout));
                 return;
             }
-            if (inputYear < currentYear || (inputYear == currentYear && inputMonth < currentMonth)) {
-                isOrder = false;
-                toast(getString(R.string.order_error_card_expiry));
-                return;
-            }
             if (!cvv.matches("\\d+") || (cvv.length() != 3 && cvv.length() != 4)) {
                 isOrder = false;
                 toast(getString(R.string.order_error_card_cvv));
                 return;
             }
+            String[] parts = expiry.split("/");
+            int inputMonth = Integer.parseInt(parts[0]);
+            int inputYear = Integer.parseInt(parts[1]) + 2000;
+
+            Calendar now = Calendar.getInstance();
+            int currentMonth = now.get(Calendar.MONTH) + 1;
+            int currentYear = now.get(Calendar.YEAR);
+
+            if (inputYear < currentYear || (inputYear == currentYear && inputMonth < currentMonth)) {
+                isOrder = false;
+                toast(getString(R.string.order_error_card_expiry));
+                return;
+            }
+
             purchase = "visa";
             panValue = digits;
             cvvValue = cvv;
