@@ -275,6 +275,10 @@ public class cartFrag extends Fragment {
             int currentMonth = now.get(Calendar.MONTH) + 1;
             int currentYear = now.get(Calendar.YEAR);
 
+            if(digits == null || expiry == null || cvv == null){
+                toast(getString(R.string.card_info_null));
+            }
+
             if (digits.length() != 16) {
                 isOrder = false;
                 toast(getString(R.string.order_error_card_number));

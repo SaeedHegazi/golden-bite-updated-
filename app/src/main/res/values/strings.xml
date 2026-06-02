@@ -17,6 +17,7 @@
     <string name="order_error_phone_wrong">Please just enter 10 numbers.</string>
     <string name="order_error_payment_both">Choose only one payment method: Cash or Visa.</string>
     <string name="order_error_payment_none">Please select Cash or Visa.</string>
+    <string name="card_info_null">Fill the card info</string>
     <string name="order_error_card_number">Enter a valid card number (16 digits).</string>
     <string name="order_error_card_expiry">Your visa card has expired</string>
     <string name="order_error_card_layout">Enter expiry as MM/YY (e.g. 08/27).</string>
