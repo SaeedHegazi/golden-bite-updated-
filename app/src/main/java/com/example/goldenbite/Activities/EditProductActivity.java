@@ -153,6 +153,10 @@ public class EditProductActivity extends BaseActivity {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!(name.matches("^[a-zA-Z][a-zA-Z\\s]*$")) || !(description.matches("^[a-zA-Z][a-zA-Z\\s]*$"))){
+            Toast.makeText(this, "name/description must be english letters", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (currentImageUrl == null || currentImageUrl.isEmpty()) {
             Toast.makeText(this, "Image is required", Toast.LENGTH_SHORT).show();
             return;
